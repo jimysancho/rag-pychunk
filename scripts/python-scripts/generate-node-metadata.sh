@@ -2,7 +2,7 @@
 
 python_file="$1"
 info_file="$2"
-scripts/python-scripts/classify-python-code.sh $python_file $info_file 2> /dev/null
+classify-python-code.sh $python_file $info_file 2> /dev/null
 file=$info_file 
 
 KEYWORDS=("Modules:" "Function:" "Method:" "Class:" "Code:")
