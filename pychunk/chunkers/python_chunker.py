@@ -32,11 +32,13 @@ class PythonChunker(Chunker):
         
     def _create_nodes_of_file(self, file_path: str) -> Dict[str, Type['BaseNode']]:
         
+        self.__bin_folder = os.path.join(self._find_venv(), "bin")
         tmp_folder = self._file_handler.tmp_folder
         if file_path.startswith("."): file_path = file_path[2:]
         elif file_path.startswith(".."): file_path = file_path[3:]
         file_name = file_path.replace("/", "_").split(".")[0]
-        command = f"./scripts/python-scripts/generate-node-metadata.sh {file_path} {tmp_folder}/{file_name}_info.txt > {tmp_folder}/{file_name}_final.txt 2> /dev/null"
+        # command = f"./pychunk/scripts/python-scripts/generate-node-metadata.sh {file_path} {tmp_folder}/{file_name}_info.txt > {tmp_folder}/{file_name}_final.txt 2> /dev/null"
+        command = f"{self.__bin_folder}/generate-node-metadata.sh {file_path} {tmp_folder}/{file_name}_info.txt > {tmp_folder}/{file_name}_final.txt 2> /dev/null"
         subprocess.run(["bash", "-c", command])
 
         nodes = {}
@@ -157,7 +159,8 @@ class PythonChunker(Chunker):
                     names_file.write(f"{name} {node.id} {node.file}\n")
         
         for path in self._files_path:    
-            command = f"./scripts/python-scripts/find-node-relationships.sh {name_file} {path} >> {relationships_file} 2> /dev/null" 
+            # command = f"./pychunk/scripts/python-scripts/find-node-relationships.sh {name_file} {path} >> {relationships_file} 2> /dev/null" 
+            command = f"{self.__bin_folder}/find-node-relationships.sh {name_file} {path} >> {relationships_file} 2> /dev/null" 
             subprocess.run(["bash", "-c", command])
            
         with open(relationships_file, "r") as node_relationship_file:
