@@ -1,0 +1,9 @@
+.venv/
+__pychache__
+*.egg-info
+tests/
+build/
+dist/
+.mypy_cache/
+*.txt
+__init__.py
