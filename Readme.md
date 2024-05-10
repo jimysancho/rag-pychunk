@@ -9,7 +9,7 @@ Python Library to chunk your python files levereging the python programming lang
 ```
 from pychunk.chunkers.python_chunker import PythonChunker
 
-files_path = ["pychunk/"]
+files_path = ["your python file/directory here!"]
 chunker = PythonChunker(files_path=files_path)
 
 nodes = chunker.find_relationships()
