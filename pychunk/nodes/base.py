@@ -81,12 +81,12 @@ class BaseNode(ABC):
             else:
                 self.__node_relationships[relationship_type][node.id] = [line_of_occurence]
         
-    def filter_relationships(self, relationship_type: NodeRelationshipType) -> List[Tuple[Type['BaseNode'], int | None]] | List:
+    def filter_relationships(self, relationship_type: NodeRelationshipType) -> Dict[str, List[int]]:
         relationship_type = relationship_type.value
         filtered_relationships = [rel for rel_type, rel in self.__node_relationships.items() if rel_type == relationship_type]
         if len(filtered_relationships) > 0:
             return filtered_relationships[0]
-        return []
+        return {}
     
     def check_relationship(self, node: Type['BaseNode'], relationship_type: NodeRelationshipType) -> bool:
         try:
