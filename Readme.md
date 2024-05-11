@@ -6,6 +6,11 @@ Python Library to chunk your python files levereging the python programming lang
 
 # How to use it
 
+First install it via *pip* command: 
+```
+pip install rag-pychunk
+```
+
 ```
 from pychunk.chunkers.python_chunker import PythonChunker
 
