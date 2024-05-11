@@ -90,7 +90,7 @@ class BaseNode(ABC):
 
 ### Filter relationships
 
-Using filer_relationship method you can get all of the relationships of a given node that are of the type: `relationship_type`.  
+Using filter_relationship method you can get all of the relationships of a given node that are of the type: `relationship_type`.  
 ```
   def filter_relationships(self, relationship_type: NodeRelationshipType) -> List[Tuple[Type['BaseNode'], int | None]] | List:
         relationship_type = relationship_type.value
