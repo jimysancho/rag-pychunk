@@ -74,7 +74,7 @@ class Chunker(ABC):
         return python_files
         
     def _find_venv(self) -> str:
-        directories = []
+        directories = [os.path.abspath(".")]
         current_dir = os.path.dirname(os.path.abspath("."))
 
         while current_dir != '/':
