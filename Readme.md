@@ -100,6 +100,27 @@ Using filer_relationship method you can get all of the relationships of a given 
         return []
 ```
 
+# Integrations
+
+You can use the `LlamaIndexParser` and `LangChainParser` to transform the nodes in compatible objects with these frameworks: 
+
+- **LlamaIndex**
+```
+from pychunk.parser.llama_index_parser import LlamaIndexParser
+
+llama_index_parser = LlamaIndexParser(nodes=list(all_nodes.values()))
+llama_index_nodes = llama_index_parser.parse_to_llama_index()
+
+```
+
+- **Langchain**
+```
+from pychunk.parser.langchain_parser import LangChainParser
+
+langchain_parser = LangChainParser(nodes=list(all_nodes.values()))
+documents = langchain_parser.parse_to_langchain_document()
+```
+
 # Other repositories
 
 - https://github.com/jimysancho/python-gpt. Chat with your python repository by levering the relationships and chunk size. 
