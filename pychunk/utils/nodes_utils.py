@@ -95,7 +95,10 @@ def create_nodes_from_file(file: str) -> Generator[Tuple, None, None]:
             class_text = None 
             end_class_line = True 
             begin_class_line = False 
-            yield class_content, (int(begin_line), int(end_line)), class_name, None, NodeType.CLASS, metadata
+            try:
+                yield class_content, (int(begin_line), int(end_line)), class_name, None, NodeType.CLASS, metadata
+            except:
+                yield class_content, None, class_name, None, NodeType.CLASS, metadata
                             
         elif line.startswith(Delimiter.function_delimiter[Pointer.end]) and isinstance(function_text, list):
 
@@ -104,34 +107,49 @@ def create_nodes_from_file(file: str) -> Generator[Tuple, None, None]:
             function_metadata = function_text[0]
             metadata = function_text[0].split("Arguments:")[-1].split("-")[0]
             function_name = line.split("FUNCTION:")[-1].replace(" ", "")[:-3]
-            begin_line, end_line = function_metadata.split("-")[-1].split(",")
+            try:
+                begin_line, end_line = function_metadata.split("-")[-1].split(",")
+            except Exception as e:
+                begin_line, end_line = None, None
+                
             if not len(end_line.strip()): end_line = int(begin_line) + 1
             del function_text[0]
             function_content = "".join(function_text)
             function_text = None 
-            yield (function_content, 
-                  (int(begin_line), 
-                   int(end_line)), 
-                   None, 
-                   function_name, 
-                   NodeType.FUNCTION, 
-                   metadata)
+            try:
+                yield (function_content, 
+                    (int(begin_line), 
+                    int(end_line)), 
+                    None, 
+                    function_name, 
+                    NodeType.FUNCTION, 
+                    metadata)
+            except Exception as e:
+                yield (function_content, None, None, function_name, NodeType.FUNCTION, metadata)
             
         elif line.startswith(Delimiter.free_code_delimiter[Pointer.end]) and isinstance(free_code, list):
             end_free_code = True 
             begin_free_code = False 
             code_metadata = free_code[0]
-            begin_line, end_line = code_metadata.split(":")[-1].split(",")
+            try:
+                begin_line, end_line = code_metadata.split(":")[-1].split(",")
+            except Exception as e:
+                begin_line = None
+                end_line = None
+                
             del free_code[0]
             code_content = "".join(free_code)
             free_code = None 
-            yield (code_content, 
-                  (int(begin_line), 
-                   int(end_line)), 
-                   None, 
-                   None, 
-                   NodeType.CODE, 
-                   None)
+            try:
+                yield (code_content, 
+                    (int(begin_line), 
+                    int(end_line)), 
+                    None, 
+                    None, 
+                    NodeType.CODE, 
+                    None)
+            except Exception as e:
+                yield (code_content, None, None, None, NodeType.CODE, None)
             
         if isinstance(modules_text, list):
             if begin_module_line: 
@@ -200,7 +218,7 @@ def create_nodes_from_file(file: str) -> Generator[Tuple, None, None]:
                        NodeType.METHOD, 
                        metadata)
             except Exception as e:
-                yield (None, None, None, None, None, None)
+                yield (method_content, None, class_name, method_name, NodeType.METHOD, metadata)
             
         if isinstance(method_text, list):
             if begin_method_line: 

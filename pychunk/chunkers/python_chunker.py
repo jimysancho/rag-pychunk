@@ -29,10 +29,14 @@ class PythonChunker(Chunker):
     
     def __init__(self, files_path: str | List[str], hash_function: Optional[Callable] | None = None):
         super(PythonChunker, self).__init__(files_path=files_path, hash_function=hash_function)
+        _venv_folder = self._find_venv()
+        if _venv_folder is None:
+            raise FileNotFoundError(f"Could not find .venv folder. Maybe you are too far from it or have not create it?")
+        
+        self.__bin_folder = os.path.join(self._find_venv(), "bin")
         
     def _create_nodes_of_file(self, file_path: str) -> Dict[str, Type['BaseNode']]:
         
-        self.__bin_folder = os.path.join(self._find_venv(), "bin")
         tmp_folder = self._file_handler.tmp_folder
         if file_path.startswith("."): file_path = file_path[2:]
         elif file_path.startswith(".."): file_path = file_path[3:]
