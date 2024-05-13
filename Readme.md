@@ -1,6 +1,6 @@
 # Description
 
-Python Library to chunk your python files levereging the python programming language to leverage two things: 
+Python Library to chunk your python files levereging the python programming language to improve two things: 
 1. Chunk size: make your chunk size dynamic, keeping in the same chunk a hole funcion, a hole class method, a hole class and block of code. 
 2. Chunk relationships: create relationships between your chunks other than `Parent-Child` and `Prev-Next`. 
 
