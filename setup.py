@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='rag-pychunk',
-    version='1.0.4',
+    version='1.1.0',
     packages=find_packages(),
     scripts=['scripts/python-scripts/classify-python-code.sh', 
              'scripts/python-scripts/find-node-relationships.sh', 
